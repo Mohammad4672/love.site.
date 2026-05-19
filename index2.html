@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>💖 Love Game</title>
+
+<style>
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#120018,#2a003d,#3f0066);
+    font-family:Arial;
+    overflow:hidden;
+    color:white;
+}
+
+/* الصوت */
+audio{display:none;}
+
+/* الحاوية */
+.container{
+    display:grid;
+    grid-template-columns:repeat(2,160px);
+    gap:20px;
+}
+
+/* الصندوق */
+.box{
+    width:160px;
+    height:160px;
+    perspective:800px;
+    cursor:pointer;
+    position:relative;
+}
+
+/* الغطاء */
+.box-inner{
+    width:100%;
+    height:100%;
+    position:relative;
+    transform-style:preserve-3d;
+    transition:0.8s;
+}
+
+.box.open .box-inner{
+    transform:rotateX(180deg);
+}
+
+/* الوجه */
+.front, .back{
+    position:absolute;
+    width:100%;
+    height:100%;
+    border-radius:20px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:40px;
+    backface-visibility:hidden;
+}
+
+/* الأمام */
+.front{
+    background:rgba(255,255,255,0.08);
+    border:2px solid rgba(255,255,255,0.2);
+}
+
+/* الخلف */
+.back{
+    background:rgba(255,255,255,0.15);
+    transform:rotateX(180deg);
+    font-size:18px;
+    padding:10px;
+    text-align:center;
+}
+
+/* النص */
+.love-text{
+    position:fixed;
+    bottom:80px;
+    left:50%;
+    transform:translateX(-50%);
+    background:rgba(0,0,0,0.6);
+    padding:15px 25px;
+    border-radius:15px;
+    display:none;
+    font-size:20px;
+}
+
+/* قلوب */
+.heart{
+    position:absolute;
+    color:pink;
+    font-size:20px;
+    animation:float 4s linear forwards;
+}
+
+@keyframes float{
+    from{transform:translateY(0); opacity:1;}
+    to{transform:translateY(-200px); opacity:0;}
+}
+
+/* صندوق النهاية */
+.final{
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    background:rgba(0,0,0,0.8);
+    padding:30px;
+    border-radius:20px;
+    display:none;
+    text-align:center;
+    font-size:22px;
+}
+</style>
+</head>
+
+<body>
+
+<audio id="music" loop>
+<source src="https://cdn.pixabay.com/audio/2022/03/15/audio_c8c8a73467.mp3">
+</audio>
+
+<div class="container">
+
+<div class="box" onclick="openBox(this,'انتي الأمان بحياتي ❤️')">
+<div class="box-inner">
+<div class="front">💌</div>
+<div class="back">❤️</div>
+</div>
+</div>
+
+<div class="box" onclick="openBox(this,'بحبك بكل تفاصيلك 🥹')">
+<div class="box-inner">
+<div class="front">💖</div>
+<div class="back">💞</div>
+</div>
+</div>
+
+<div class="box" onclick="openBox(this,'وجودك بيكملني 🌎')">
+<div class="box-inner">
+<div class="front">🌹</div>
+<div class="back">💘</div>
+</div>
+</div>
+
+<div class="box" onclick="finalBox(this)">
+<div class="box-inner">
+<div class="front">💎</div>
+<div class="back">✨</div>
+</div>
+</div>
+
+</div>
+
+<div class="love-text" id="text"></div>
+
+<div class="final" id="final">
+💖 هيدا قلبي إلك بس 💖<br><br>
+ما في بعدك ولا في غيرك 🥹
+</div>
+
+<script>
+
+let music = document.getElementById("music");
+let started = false;
+
+/* فتح الصناديق */
+function openBox(el, msg){
+
+    el.classList.add("open");
+
+    showMessage(msg);
+    hearts();
+
+    playMusic();
+}
+
+/* الصندوق الأخير */
+function finalBox(el){
+
+    el.classList.add("open");
+
+    hearts();
+    playMusic();
+
+    setTimeout(()=>{
+        document.getElementById("final").style.display="block";
+    },800);
+}
+
+/* رسالة */
+function showMessage(msg){
+    let t = document.getElementById("text");
+    t.innerHTML = msg;
+    t.style.display="block";
+
+    setTimeout(()=>{
+        t.style.display="none";
+    },2000);
+}
+
+/* قلوب */
+function hearts(){
+    for(let i=0;i<10;i++){
+        let h = document.createElement("div");
+        h.className="heart";
+        h.innerHTML="❤️";
+        h.style.left=Math.random()*100+"vw";
+        h.style.top="80%";
+        h.style.fontSize=(15+Math.random()*20)+"px";
+
+        document.body.appendChild(h);
+
+        setTimeout(()=>h.remove(),4000);
+    }
+}
+
+/* موسيقى */
+function playMusic(){
+    if(!started){
+        music.play().catch(()=>{});
+        started = true;
+    }
+}
+
+/* انتقال تلقائي من الصفحة الأولى */
+setTimeout(()=>{
+    // إذا بدك تربطها مع صفحتك الأولى
+    // حط اسم الصفحة الأولى هون:
+    // window.location.href = "index.html";
+},3000);
+
+</script>
+
+</body>
+</html>
