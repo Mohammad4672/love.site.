@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>💖 Love Story Ultimate</title>
+
+<style>
+body{
+  margin:0;
+  height:100vh;
+  overflow:hidden;
+  background:black;
+  font-family:Arial;
+  color:white;
+  transition:0.3s;
+}
+
+/* 📅 التاريخ الثابت */
+#memory{
+  position:fixed;
+  top:15px;
+  left:50%;
+  transform:translateX(-50%);
+  background:rgba(255,255,255,0.08);
+  padding:10px 14px;
+  border-radius:12px;
+  backdrop-filter:blur(10px);
+  box-shadow:0 0 20px #ff4d6d;
+  font-size:14px;
+  z-index:1000;
+  animation:beat 2s infinite;
+}
+
+@keyframes beat{
+  0%,100%{transform:translateX(-50%) scale(1)}
+  50%{transform:translateX(-50%) scale(1.08)}
+}
+
+/* 💓 start */
+#start{
+  position:absolute;
+  inset:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+}
+
+.big{
+  font-size:100px;
+  cursor:pointer;
+  animation:beatHeart 1s infinite;
+  text-shadow:0 0 20px #ff4d6d;
+}
+
+@keyframes beatHeart{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.2)}
+}
+
+/* 💭 hint */
+#hint{
+  position:fixed;
+  inset:0;
+  display:none;
+  justify-content:center;
+  align-items:center;
+  background:rgba(0,0,0,0.85);
+  z-index:10;
+}
+
+#box{
+  background:white;
+  color:black;
+  padding:20px;
+  width:280px;
+  border-radius:15px;
+  text-align:center;
+}
+
+/* 💥 crack screen */
+#crack{
+  position:fixed;
+  inset:0;
+  display:none;
+  justify-content:center;
+  align-items:center;
+  background:rgba(0,0,0,0.95);
+  z-index:999;
+}
+
+#shards{
+  position:absolute;
+  inset:0;
+  background:
+    repeating-linear-gradient(45deg, transparent 0, rgba(255,0,0,0.15) 2px, transparent 4px),
+    repeating-linear-gradient(-45deg, transparent 0, rgba(255,0,0,0.15) 2px, transparent 4px);
+  animation:glitch 0.2s infinite;
+}
+
+@keyframes glitch{
+  0%{transform:translate(0,0)}
+  50%{transform:translate(2px,-2px)}
+  100%{transform:translate(-2px,2px)}
+}
+
+#crackText{
+  position:relative;
+  color:#ff4d4d;
+  font-size:22px;
+  text-shadow:0 0 20px red;
+  z-index:2;
+}
+
+/* 💌 movie */
+#movie{
+  position:fixed;
+  inset:0;
+  display:none;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  text-align:center;
+}
+
+/* 💖 hearts */
+.heart{
+  position:absolute;
+  top:-20px;
+  color:#ff4d6d;
+  animation:fall 3s linear forwards;
+}
+
+@keyframes fall{
+  to{transform:translateY(110vh);opacity:0}
+}
+
+/* ❌ shake */
+@keyframes shake{
+  0%{transform:translate(2px,2px)}
+  25%{transform:translate(-2px,2px)}
+  50%{transform:translate(2px,-2px)}
+  75%{transform:translate(-2px,-2px)}
+  100%{transform:translate(0,0)}
+}
+
+.red{background:red !important;}
+</style>
+</head>
+
+<body>
+
+<div id="memory">
+  📅 25/04/2025 ⏰ 3:21  
+  <div style="margin-top:5px; font-size:13px; opacity:0.9;">
+    ❤️ أحلى يوم بحياتي
+  </div>
+</div>
+<!-- 💓 start -->
+<div id="start">
+  <div class="big" onclick="openHint()">💖</div>
+  <p>رح تشوفي قصة حبنا</p>
+</div>
+
+<!-- 💭 hint -->
+<div id="hint">
+  <div id="box">
+    <h3>💭 لغز الحب</h3>
+    <p>شي ما بينتنسى… ❤️</p>
+
+    <input id="code" placeholder="اكتب الجواب">
+    <br>
+    <button onclick="check()">فتح 💌</button>
+    <p id="err"></p>
+  </div>
+</div>
+
+<!-- 💥 crack screen -->
+<div id="crack">
+  <div id="shards"></div>
+  <div id="crackText">💔 الشاشة تكسّرت… فكري منيح يا قلبي 😏</div>
+</div>
+
+<!-- 💌 movie -->
+<div id="movie">
+  <h1 id="text"></h1>
+</div>
+
+<script>
+
+let messages=[
+"💖 بحبك بطريقة ما بتنشرح",
+"💌 إنتِ كل شي بحياتي",
+"✨ كل يوم بحبك أكتر",
+"❤️ ما في غيرك بقلبي",
+"💖 وبحياتي ما رح يكون في غيرك بقلبي",
+"🤍 بحبك ورح ضل حبك كل عمري",
+"💓 إنتِ أحلى واحن واطيب بنت بالدنيا كلها",
+"💌 واكيد الله ما رح يخلق متلك"
+];
+
+let i=0;
+
+/* hint */
+function openHint(){
+  document.getElementById("hint").style.display="flex";
+}
+
+/* crack effect */
+function crack(){
+  let c=document.getElementById("crack");
+  c.style.display="flex";
+
+  document.body.style.animation="shake 0.2s 4";
+  document.body.style.background="darkred";
+
+  if(navigator.vibrate){
+    navigator.vibrate([200,100,300]);
+  }
+
+  setTimeout(()=>{
+    c.style.display="none";
+    document.body.style.background="black";
+    document.body.style.animation="";
+  },1500);
+}
+
+/* check */
+function check(){
+  let code=document.getElementById("code").value.trim();
+
+  if(code!=="1542004"){
+    document.getElementById("err").innerText="💔 غلط… يا قلبي";
+    crack();
+    return;
+  }
+
+  document.getElementById("hint").style.display="none";
+  startMovie();
+}
+
+/* start movie */
+function startMovie(){
+  document.getElementById("start").style.display="none";
+  document.getElementById("movie").style.display="flex";
+  type();
+}
+
+/* typing */
+function type(){
+  let box=document.getElementById("text");
+  let msg=messages[i];
+  let j=0;
+  box.innerHTML="";
+
+  function typing(){
+    if(j<msg.length){
+      box.innerHTML+=msg.charAt(j);
+      j++;
+      setTimeout(typing,40);
+    }
+  }
+
+  typing();
+
+  i++;
+  if(i>=messages.length) i=0;
+}
+
+/* hearts */
+document.addEventListener("click",()=>{
+  if(document.getElementById("movie").style.display==="flex"){
+    let h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML="💖";
+    h.style.left=Math.random()*100+"vw";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),3000);
+  }
+});
+
+</script>
+
+</body>
+</html>
